@@ -1,0 +1,12 @@
+# App
+config.py
+
+# Python
+env/
+doc/
+__pycache__/
+*.pyc
+
+# Vim
+*.swp
+*.swo

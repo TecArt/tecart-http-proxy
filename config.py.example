@@ -1,0 +1,23 @@
+import syslog
+
+# Port the server will listen on
+LISTEN_PORT = 8080
+
+# DNS cache retention time in seconds
+DNS_TTL = 3600
+
+# Connection test timeout
+DNS_TEST_TIMEOUT = 5
+
+# Run DNS garbage collector every n seconds
+DNS_GARBAGE_LOOP_TIME = 60
+
+# Timeout for outbound requests in seconds
+REQUEST_TIMEOUT = 5
+
+# Anything other then syslog will redirect logging to stdout
+LOG_TYPE = 'notsyslog'
+
+# Log level to actually emit to syslog server. Only used when LOG_TYPE is 
+# set to 'syslog'
+LOG_FACILITY = syslog.LOG_DAEMON
