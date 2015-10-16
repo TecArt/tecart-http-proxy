@@ -27,8 +27,8 @@ to a directory of your choice.
 mkdir -p /opt/TecArt/
 cd /opt/TecArt
 
-release=$(curl -s https://api.github.com/repos/TecArt/tecart-http-proxy/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
-curl "$release"
+release=$(curl -s https://api.github.com/repos/TecArt/tecart-http-proxy/releases/latest | grep zipball_url | head -n 1 | cut -d '"' -f 4)
+curl -L -o tecart-http-proxy.zip "$release"
 unzip tecart-http-proxy.zip
 rm tecart-http-proxy.zip
 
