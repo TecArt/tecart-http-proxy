@@ -31,6 +31,7 @@ release=$(curl -s https://api.github.com/repos/TecArt/tecart-http-proxy/releases
 curl -L -o tecart-http-proxy.zip "$release"
 unzip tecart-http-proxy.zip
 rm tecart-http-proxy.zip
+mv TecArt-tecart-http-proxy-*/ tecart-http-proxy/
 
 cd tecart-http-proxy/
 
