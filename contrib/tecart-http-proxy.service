@@ -8,7 +8,7 @@ User=proxy
 Group=proxy
 Restart=always
 RestartSec=30
-ExecStart=/home/bytebot/Bytebot/env/bin/python /home/bytebot/Bytebot/bytebot.py
+ExecStart=/opt/TecArt/tecart-http-proxy/env/bin/python /opt/TecArt/tecart-http-proxy/proxy.py
 MemoryLimit=128M
 
 [Install]
