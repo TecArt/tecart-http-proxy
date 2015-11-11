@@ -14,7 +14,7 @@ You will also need Python 2 with Pip and virtualenv installed.
 For Debian, the following command will install the prerequisites:
 
 ```sh
-apt-get install python python-pip virtualenvwrapper supervisor
+apt-get install python python-dev python-pip virtualenvwrapper supervisor
 ```
 
 ### Software installation
