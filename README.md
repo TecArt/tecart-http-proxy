@@ -14,7 +14,7 @@ You will also need Python 2 with Pip and virtualenv installed.
 For Debian, the following command will install the prerequisites:
 
 ```sh
-apt-get install python python-pip virtualenvwrapper supervisor
+apt-get install python python-dev python-pip virtualenvwrapper supervisor
 ```
 
 ### Software installation
@@ -31,6 +31,7 @@ release=$(curl -s https://api.github.com/repos/TecArt/tecart-http-proxy/releases
 curl -L -o tecart-http-proxy.zip "$release"
 unzip tecart-http-proxy.zip
 rm tecart-http-proxy.zip
+mv TecArt-tecart-http-proxy-*/ tecart-http-proxy/
 
 cd tecart-http-proxy/
 
