@@ -269,5 +269,10 @@ if __name__ == '__main__':
     factory = ProxyFactory()
 
     twisted.internet.reactor.dns_cache = DnsCache(ttl=config.DNS_TTL)
-    twisted.internet.reactor.listenTCP(config.LISTEN_PORT, factory)
+    for ip in config.LISTEN_IP:
+        twisted.internet.reactor.listenTCP(
+            config.LISTEN_PORT,
+            factory,
+            interface=ip
+        )
     twisted.internet.reactor.run()
