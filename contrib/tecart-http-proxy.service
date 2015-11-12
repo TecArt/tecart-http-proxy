@@ -1,7 +1,7 @@
 [Unit]
 Description=TecArt HTTP Proxy Daemon
-After=network-online.target,syslog.service
-Requires=network-online.target,syslog.service
+After=network-online.target syslog.service
+Requires=network-online.target syslog.service
 
 [Service]
 User=proxy
