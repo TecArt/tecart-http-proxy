@@ -57,3 +57,15 @@ command:
 ```sh
 service supervisor restart
 ```
+
+### Systemd configuration
+
+To use the tecart-http-proxy with systemd, simply copy the unit file to your
+system directory:
+
+```sh
+cp /opt/TecArt/tecart-http-proxy/contrib/tecart-http-proxy.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable tecart-http-proxy
+systemctl start tecart-http-proxy
+```
