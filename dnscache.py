@@ -163,6 +163,11 @@ class DnsCache:
                     continue
 
                 ip = records[-1][0]
+                if not ip:
+                    del self.lookup_table[lookup_name]
+                    raise Exception(
+                        "No IP records found in record set %s" % records)
+
                 if ip not in self.lookup_table[lookup_name]:
                     self.lookup_table[lookup_name][ip] = time()
 
