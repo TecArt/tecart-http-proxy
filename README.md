@@ -9,12 +9,12 @@ DNS cache that allows for clean retries when multiple IPs are returned for
 The server has been tested with `supervisor` as helper for daemonization. This 
 is the recommended way to run in production.
 
-You will also need Python 2 with Pip and virtualenv installed.
+You will also need Python 3 with Pip and venv installed.
 
 For Debian, the following command will install the prerequisites:
 
 ```sh
-apt-get install python python-dev python-pip virtualenvwrapper supervisor
+apt-get install python3 python3-dev python3-pip python3-venv supervisor
 ```
 
 ### Software installation
@@ -35,7 +35,7 @@ mv TecArt-tecart-http-proxy-*/ tecart-http-proxy/
 
 cd tecart-http-proxy/
 
-virtualenv env
+pyvenv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
