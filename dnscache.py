@@ -172,7 +172,7 @@ class DnsCache:
                     self.lookup_table[lookup_name][ip] = time()
 
         
-        ip = choice(self.lookup_table[lookup_name].keys())
+        ip = choice(list(self.lookup_table[lookup_name]))
         self.lookup_table[lookup_name][ip] = time()
 
         return ip

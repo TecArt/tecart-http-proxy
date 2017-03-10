@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 """
 HTTP proxy server that supports CONNECT requests and adds support for 
 DNS caching.
@@ -10,18 +10,24 @@ in the root directory of this source tree.
 """
 
 import argparse
-import urlparse
+
+from urllib import parse as urlparse
 
 import twisted.web.http
 import twisted.internet
 from twisted.internet.protocol import Protocol, ClientFactory
 from twisted.internet import address, error
 from twisted.internet.endpoints import HostnameEndpoint 
-from twisted.web.proxy import Proxy, ProxyRequest
+from twisted.web.proxy import Proxy, ProxyRequest, ProxyClientFactory
 from twisted.python import log, syslog
 from dnscache import DnsCache
 
 import config
+
+
+class ConnectProxyClientFactory(ProxyClientFactory):
+    pass
+
 
 class ConnectProxyRequest(ProxyRequest):
     """ConnectProxyRequest is a factory for for HTTP proxy requests
@@ -34,12 +40,17 @@ class ConnectProxyRequest(ProxyRequest):
 
     connectedProtocol = None
     noisy = False
+    protocols = {
+        b'http': ProxyClientFactory,
+        b'https': ConnectProxyClientFactory
+    }
+    ports = {b'http': 80, b'https': 443}
 
     def process(self):
         """Checkes the request for the CONNECT keyword and redirects
         to specific functions accordingly."""
 
-        if self.method == 'CONNECT':
+        if self.method == b'CONNECT':
             self.process_connect()
         else:
             ProxyRequest.process(self)
@@ -73,7 +84,7 @@ class ConnectProxyRequest(ProxyRequest):
 
         @return: A tuple containing host and port
         """
-        parts = hostport.split(':', 1)
+        parts = hostport.split(b':', 1)
         if len(parts) == 2:
             try:
                 port = int(parts[1])
@@ -122,8 +133,13 @@ class ConnectProxy(Proxy):
         @param request: The finished request from a client
         @type request: 
         """
-        if request.method == 'CONNECT' and self.connectedRemote is not None:
+        if request.method == b'CONNECT' and self.connectedRemote is not None:
             self.connectedRemote.connectedClient = self
+            self._handlingRequest = False
+            self.resumeProducing()
+            data = b''.join(self._dataBuffer)
+            self._dataBuffer = []
+            self.setLineMode(data)
         else:
             Proxy.requestDone(self, request)
 
@@ -171,12 +187,13 @@ class ConnectProxyProtocol(Protocol):
 
         try:
             self.factory.request.channel.connectedRemote = self
-            self.factory.request.setResponseCode(200, "CONNECT OK")
+            self.factory.request.setResponseCode(200, b"CONNECT OK")
             self.factory.request.setHeader('X-Connected-IP',
                                            self.transport.realAddress[0])
-            self.factory.request.setHeader('Content-Length', '0')
+
             self.factory.request.finish()
-        except:
+        except Exception as e:
+            log.err('ConnectProxyProtocol::connectionMade failed with %s' % e)
             pass
 
     def connectionLost(self, reason):
@@ -250,7 +267,9 @@ class ConnectProxyProtocolFactory(ClientFactory):
                         self.host, self.port)
                 connector.connect()
                 return
-        self.request.fail("Gateway Error", str(reason))
+
+        log.err(str(reason))
+        self.request.fail(b"Gateway Error", str.encode(str(reason)))
 
 
 class ProxyFactory(twisted.web.http.HTTPFactory):
