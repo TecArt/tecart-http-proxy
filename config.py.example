@@ -19,6 +19,9 @@ DNS_TEST_TIMEOUT = 5
 # Run DNS garbage collector every n seconds
 DNS_GARBAGE_LOOP_TIME = 60
 
+# Renew cache timeout for DNS every time a record is retrieved if True
+RETAIN_CACHE = False
+
 # Timeout for outbound requests in seconds
 REQUEST_TIMEOUT = 5
 

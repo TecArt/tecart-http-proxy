@@ -173,7 +173,8 @@ class DnsCache:
 
         
         ip = choice(list(self.lookup_table[lookup_name]))
-        self.lookup_table[lookup_name][ip] = time()
+        if 'RETAIN_CACHE' in vars(config) and config.RETAIN_CACHE:
+            self.lookup_table[lookup_name][ip] = time()
 
         return ip
 
