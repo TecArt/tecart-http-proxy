@@ -216,10 +216,10 @@ class DnsCache:
         
         d = []
 
-        for host, port in self.lookup_table.keys():
+        for host, port in list(self.lookup_table.keys()):
             lookup_name = (host, port)
 
-            for record in self.lookup_table[lookup_name].keys():
+            for record in list(self.lookup_table[lookup_name].keys()):
                 record_time = self.lookup_table[lookup_name][record]
                 if record_time < (time() - self.ttl):
                     log.msg("Removing old record %s" % record, logLevel=logging.DEBUG,
