@@ -6,16 +6,16 @@ DNS cache that allows for clean retries when multiple IPs are returned for
 ## Installation
 ### Prerequisites
 
-The server has been tested with `supervisor` as helper for daemonization. This 
-is the recommended way to run in production.
+The recommended way to run in production is daemonization with `systemd` unit file which available at `contrib/tecart-http-proxy.service`.
 
 You will also need Python 3 with Pip and venv installed.
 
 For Debian, the following command will install the prerequisites:
 
 ```sh
-apt-get install python3 python3-dev python3-pip python3-venv supervisor
+apt-get install python3 python3-dev python3-pip python3-venv
 ```
+If you are using Ubuntu, you need to enable multiverse repos as well. 
 
 ### Software installation
 
@@ -35,27 +35,9 @@ mv TecArt-tecart-http-proxy-*/ tecart-http-proxy/
 
 cd tecart-http-proxy/
 
-pyvenv env
+python3 -m venv env
 source env/bin/activate
 pip install -r requirements.txt
-```
-
-### Supervisor configuration
-
-To daemonize the tecart-http-proxy, create a supervisor configuration under 
-`/etc/supervisor/conf.d/tecart-http-proxy.conf` with the following content:
-
-```ini
-[program:tecart-http-proxy]
-command=/opt/TecArt/tecart-http-proxy/env/bin/python /opt/TecArt/tecart-http-proxy/proxy.py
-user=proxy
-```
-
-After creating the configuration, restart the supervisor with the following
-command:
-
-```sh
-service supervisor restart
 ```
 
 ### Systemd configuration
