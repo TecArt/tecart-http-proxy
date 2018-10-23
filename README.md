@@ -1,5 +1,7 @@
 # tecart-http-proxy
 
+:heavy_exclamation_mark: This project is not under active development anymore. We would encourage you to use another proxy server like [tinyproxy](https://github.com/tinyproxy/tinyproxy).
+
 This is a HTTP proxy server that supports CONNECT requests. The proxy uses a
 DNS cache that allows for clean retries when multiple IPs are returned for 
 
